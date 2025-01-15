@@ -29,6 +29,8 @@ export async function GET(request: Request) {
         },
       }
     );
+    const errorData = await response.json();
+    console.error("Error fetching summoner:", errorData); // Riot API에서 반환한 에러 메시지 확인
 
     if (!response.ok) {
       const errorData = await response.json();

@@ -1,10 +1,17 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx}", // App Router 디렉토리
-    "./components/**/*.{js,ts,jsx,tsx}", // 재사용 컴포넌트 디렉토리
-  ],
+  content: ["./app/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        retroPink: "#FF69B4",
+        retroBlue: "#00BFFF",
+        retroYellow: "#FFD700",
+      },
+      fontFamily: {
+        retro: ["Comic Sans MS", "cursive", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 };

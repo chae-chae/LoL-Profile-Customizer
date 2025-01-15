@@ -1,62 +1,35 @@
-"use client";
-
-import { useState } from "react";
-
-export default function HomePage() {
-  const [summonerName, setSummonerName] = useState("");
-  const [summonerData, setSummonerData] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSearch = async () => {
-    if (!summonerName) {
-      setError("소환사 이름을 입력해주세요.");
-      return;
-    }
-    setError(null);
-    setSummonerData(null);
-
-    try {
-      const response = await fetch(
-        `/api/summoner?summonerName=${summonerName}`
-      );
-      if (!response.ok) {
-        throw new Error("소환사를 찾을 수 없습니다.");
-      }
-      const data = await response.json();
-      setSummonerData(data);
-    } catch (err: any) {
-      setError(err.message);
-    }
-  };
-
+export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-      <h1 className="text-3xl font-bold mb-6">롤 전적 검색</h1>
-      <div className="flex space-x-4 mb-6">
-        <input
-          type="text"
-          placeholder="소환사 이름을 입력하세요"
-          value={summonerName}
-          onChange={(e) => setSummonerName(e.target.value)}
-          className="px-4 py-2 rounded-md bg-gray-800 text-white border border-gray-700 focus:outline-none"
-        />
-        <button
-          onClick={handleSearch}
-          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
-        >
-          검색
-        </button>
-      </div>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      {summonerData && (
-        <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
-          <h2 className="text-xl font-bold mb-2">
-            {summonerData.summonerName}
-          </h2>
-          <p>랭크: {summonerData.rank}</p>
-          <p>레벨: {summonerData.level}</p>
+    <div className="min-h-screen bg-gradient-to-r from-retroPink to-retroBlue text-center font-retro">
+      <header className="py-4 bg-retroYellow shadow-md border-b-4 border-black">
+        <h1 className="text-4xl font-bold text-black">
+          Welcome to Retro League!
+        </h1>
+        <p className="text-sm">
+          Your personalized League of Legends stats site.
+        </p>
+      </header>
+
+      <main className="p-8">
+        <form className="mb-4">
+          <label className="block mb-2 text-lg">Enter Summoner Name:</label>
+          <input
+            type="text"
+            placeholder="Summoner Name"
+            className="px-4 py-2 border-2 border-black rounded-lg focus:outline-none"
+          />
+          <button className="ml-2 px-4 py-2 bg-retroPink text-white border-2 border-black rounded-lg hover:bg-black hover:text-retroPink">
+            Search
+          </button>
+        </form>
+        <div className="mt-8">
+          <p className="text-xl">💾 Latest stats will appear here!</p>
         </div>
-      )}
+      </main>
+
+      <footer className="py-4 bg-black text-white">
+        <p>© 2025 Retro League | Made with ❤️</p>
+      </footer>
     </div>
   );
 }
