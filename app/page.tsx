@@ -1,4 +1,18 @@
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 export default function Home() {
+  const [summonerName, setSummonerName] = useState("");
+  const router = useRouter();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (summonerName.trim()) {
+      router.push(`/results?summonerName=${encodeURIComponent(summonerName)}`);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-retroPink to-retroBlue text-center font-retro">
       <header className="py-4 bg-retroYellow shadow-md border-b-4 border-black">
@@ -11,20 +25,22 @@ export default function Home() {
       </header>
 
       <main className="p-8">
-        <form className="mb-4">
+        <form onSubmit={handleSearch} className="mb-8">
           <label className="block mb-2 text-lg">Enter Summoner Name:</label>
           <input
             type="text"
+            value={summonerName}
+            onChange={(e) => setSummonerName(e.target.value)}
             placeholder="Summoner Name"
             className="px-4 py-2 border-2 border-black rounded-lg focus:outline-none"
           />
-          <button className="ml-2 px-4 py-2 bg-retroPink text-white border-2 border-black rounded-lg hover:bg-black hover:text-retroPink">
+          <button
+            type="submit"
+            className="ml-2 px-4 py-2 bg-retroPink text-white border-2 border-black rounded-lg hover:bg-black hover:text-retroPink"
+          >
             Search
           </button>
         </form>
-        <div className="mt-8">
-          <p className="text-xl">💾 Latest stats will appear here!</p>
-        </div>
       </main>
 
       <footer className="py-4 bg-black text-white">
