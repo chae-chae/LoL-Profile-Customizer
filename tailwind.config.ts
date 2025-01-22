@@ -1,18 +1,20 @@
 import type { Config } from "tailwindcss";
 
-export default {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+const config: Config = {
+  content: ["./app/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        retroPink: "#ff66b2",
+        retroBlue: "#3399ff",
+        retroYellow: "#ffcc00",
+      },
+      fontFamily: {
+        pixel: ["'Press Start 2P'", "cursive"], // 커스텀 폰트 추가
       },
     },
   },
   plugins: [],
-} satisfies Config;
+};
+
+export default config;
