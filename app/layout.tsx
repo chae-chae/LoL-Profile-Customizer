@@ -1,15 +1,15 @@
-import "./globals.css";
-import { ReactNode } from "react";
+import { ThemeProvider } from "./context/themeContext";
 
-export const metadata = {
-  title: "LOL Profile Customizer",
-  description: "Customize your League of Legends profile with ease!",
-};
-
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body className="bg-gray-900 text-white">{children}</body>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
