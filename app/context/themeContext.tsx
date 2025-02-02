@@ -1,36 +1,37 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
+// 사용할 테마들
 const themes = {
   neon: "bg-gradient-to-r from-purple-700 to-pink-600 text-white",
   retro: "bg-retroBlue text-black",
   classic: "bg-gray-900 text-gray-100",
 };
 
-const ThemeContext = createContext({
-  theme: "neon",
-  setTheme: (theme: string) => {},
-});
+// 타입 정의
+type ThemeContextType = {
+  theme: keyof typeof themes;
+  setTheme: (theme: keyof typeof themes) => void;
+};
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState("neon");
+// 컨텍스트 생성
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) setTheme(savedTheme);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [theme, setTheme] = useState<keyof typeof themes>("retro"); // 기본 테마 설정
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
-      <div className={themes[theme] || themes["neon"]}>{children}</div>
+      <div className={themes[theme]}>{children}</div> {/* 테마 적용 */}
     </ThemeContext.Provider>
   );
 }
 
+// 커스텀 훅
 export function useTheme() {
-  return useContext(ThemeContext);
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
 }
